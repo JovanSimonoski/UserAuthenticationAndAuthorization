@@ -1,0 +1,70 @@
+﻿@model JovanSimonoski212005.Models.LoginViewModel
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<h2>Log in</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4 style="color:red">@ViewBag.Message</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <br />
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Log in" class="btn btn-default" onclick="hashPasswordAndSubmit()" style="background-color:cadetblue"/>
+            </div>
+        </div>
+    </div>
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+<script>
+    async function hashPasswordAndSubmit() {
+        // Get the password value
+        var password = document.getElementById('Password').value;
+
+        // Hash the password using a simple example (SHA-256)
+        var hashedPassword = await sha256(password);
+
+        // Set the hashed password back to the input field
+        document.getElementById('Password').value = hashedPassword;
+
+        // Submit the form
+        document.forms[0].submit();
+    }
+
+    // Simple SHA-256 hashing function (for illustration purposes)
+    async function sha256(input) {
+        var buffer = new TextEncoder('utf-8').encode(input);
+        var hashBuffer = await crypto.subtle.digest('SHA-256', buffer);
+
+        var hashArray = Array.from(new Uint8Array(hashBuffer));
+        var hashHex = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
+        return hashHex;
+    }
+</script>
+}

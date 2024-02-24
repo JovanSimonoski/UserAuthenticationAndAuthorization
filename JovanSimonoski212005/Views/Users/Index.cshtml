@@ -1,0 +1,44 @@
+﻿@model IEnumerable<JovanSimonoski212005.Models.User>
+
+@{
+    ViewBag.Title = "Users";
+}
+
+<h2>Users</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Salt)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HashedPassword)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Salt)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HashedPassword)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+            @if ((string)Session["Role"] == "Admin")
+            {
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            }
+        </td>
+    </tr>
+}
+
+</table>

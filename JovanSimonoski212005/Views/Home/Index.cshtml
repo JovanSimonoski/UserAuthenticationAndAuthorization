@@ -1,0 +1,58 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<main>
+    @if ((string)Session["Role"] == "Admin")
+    {
+        <h1>Welcome to ADMINISTRATOR dashboard.</h1>
+    }
+    @if ((string)Session["Role"] == "Moderator")
+    {
+        <h1>Welcome to MODERATOR dashboard.</h1>
+    }
+    <section class="row" aria-labelledby="aspnetTitle">
+        <h1 id="title">User authentication and authorization</h1>
+        <p class="lead">Оваа веб страна демонстрира процес на регирстрација, автентикација и менаџирање со личните податоци на корисниците.</p>
+    </section>
+
+    <div class="row">
+        <section class="col-md-5" aria-labelledby="gettingStartedTitle">
+            <h2>Како се изведува регистрацијата?</h2>
+            <br />
+            <ul>
+                <li>
+                    <p>
+                        При регистрацијата на даден корисник се прави проверка на комплексноста
+                        на лозинката и се проверува дали веќе постои корисник со истата емаил адреса.
+                    </p>
+                </li>
+                <li>
+                    <p>
+                        Следниот чекор е потврдување на емаил адресата. Tоа се постигнува со внесување
+                        на кодот кој ќе го добиете преку е-пошта на емаил адресата која ја внесовте.
+                    </p>
+                </li>
+            </ul>
+        </section>
+        <section class="col-md-5" aria-labelledby="librariesTitle">
+            <h2>Како се изведува најавувањето?</h2>
+            <br />
+            <ul>
+                <li>
+                    <p>
+                        При најавувањето, внесувате емаил и лозинка по што се прави проверка на внесените податоци.
+                    </p>
+                </li>
+                <li>
+                    <p>
+                        Следниот чекор е дво-факторската автентикација за која треба да го внесете кодот кој ќе ви биде испратен
+                        преку е-пошта на емаил адресата на која е регистриран самиот корисник.
+                    </p>
+                </li>
+            </ul>
+            <br />
+        </section>
+    </div>
+
+</main>

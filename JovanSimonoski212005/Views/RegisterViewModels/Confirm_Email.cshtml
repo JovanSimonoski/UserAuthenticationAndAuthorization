@@ -1,0 +1,85 @@
+﻿@model JovanSimonoski212005.Models.Confirm_Email
+
+@{
+    ViewBag.Title = "Confirm_Email";
+}
+
+<h2>Confirm_Email</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4 style="color:red">@ViewBag.Message</h4>
+        <hr />
+        <h5>We sent you an email confirmation code to your email address.</h5>
+        <br />
+        <h6>The code is valid for 5 minutes</h6>
+        <br />
+        <div id="countdown-container" style="width:20%">
+            <div id="countdown"></div>
+        </div>
+        <br />
+        <h6>Please enter it:</h6>
+        <hr />
+        @Html.HiddenFor(m => m.User_Id)
+        <div class="form-group">
+            @Html.LabelFor(model => model.Registration_Code, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Registration_Code, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Registration_Code, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <br />
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Confirm" class="btn btn-default" style="background-color:cadetblue" />
+            </div>
+        </div>
+    </div>
+}
+
+@section scripts {
+    <script>
+        var countdownDuration = 5 * 60;
+
+        function updateCountdown() {
+            var minutes = Math.floor(countdownDuration / 60);
+            var seconds = countdownDuration % 60;
+
+            var countdownDisplay = `${padZero(minutes)}:${padZero(seconds)}`;
+            document.getElementById('countdown').innerHTML = countdownDisplay;
+
+            if (countdownDuration <= 0) {
+                clearInterval(countdownInterval);
+                document.getElementById('countdown').innerHTML = "Countdown reached zero!";
+            } else {
+                countdownDuration--;
+            }
+        }
+
+        function padZero(number) {
+            return (number < 10 ? '0' : '') + number;
+        }
+
+        var countdownInterval = setInterval(updateCountdown, 1000);
+    </script>
+
+    <style>
+        #countdown-container {
+            font-family: 'Arial', sans-serif;
+            font-size: 24px;
+            color: #333;
+            text-align: center;
+            padding: 20px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #countdown {
+            font-weight: bold;
+        }
+    </style>
+}
